@@ -1,0 +1,17 @@
+<svg width="172" height="320" viewBox="0 0 172 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="172" height="320" fill="#1E1E1E"/>
+<!-- Body with Gradient -->
+<defs>
+    <radialGradient id="bodyGradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+      <stop offset="0%" style="stop-color:rgb(220,235,255);stop-opacity:1" />
+      <stop offset="100%" style="stop-color:rgb(160,196,255);stop-opacity:1" />
+    </radialGradient>
+</defs>
+<path d="M86 125 C70 125, 60 135, 60 155 C60 170, 70 180, 86 180 C102 180, 112 170, 112 155 C112 135, 102 125, 86 125Z" fill="url(#bodyGradient)"/>
+<!-- Blinking Eyes -->
+<path d="M72 150 C75 145, 81 145, 84 150" stroke="#2F2F2F" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+<path d="M88 150 C91 145, 97 145, 100 150" stroke="#2F2F2F" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+<!-- Antenna -->
+<path d="M86 125 C86 115, 80 110, 80 110" stroke="#A0C4FF" stroke-width="4" stroke-linecap="round"/>
+<circle cx="79" cy="109" r="5" fill="#A0C4FF"/>
+</svg>
