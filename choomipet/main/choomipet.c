@@ -3,6 +3,9 @@
 #include "LVGL_Driver.h"
 #include "lvgl.h"
 
+// 声明外部图片资源
+LV_IMG_DECLARE(jiumi_img);
+
 /**
  * @brief 应用主任务
  *
@@ -17,25 +20,25 @@ void app_task(void *pvParameter)
     // 初始化LVGL
     LVGL_Init();
 
-    /*
-     * 要显示图片，请按照以下步骤操作:
-     * 1. 将图片文件 (例如 a.png) 通过 https://lvgl.io/tools/imageconverter 转换为C文件。
-     *    - 颜色格式选择: CF_TRUE_COLOR_ALPHA (如果图片带透明通道) or CF_TRUE_COLOR
-     *    - 输出格式选择: C array
-     * 2. 将生成的C文件 (例如 a.c) 添加到 main 目录下, 并在 CMakeLists.txt 中添加该文件的引用。
-     * 3. 在此文件中声明并使用图片:
-     *    LV_IMG_DECLARE(a); // 在文件顶部声明
-     *    lv_obj_t *img = lv_img_create(lv_scr_act()); // 创建图片对象
-     *    lv_img_set_src(img, &a); // 设置图片源
-     *    lv_obj_align(img, LV_ALIGN_CENTER, 0, 0); // 设置对齐方式
-     */
-
-    // 创建一个LVGL标签
+    // Create an image widget and set the image source
+    // 在172×320分辨率的1.47寸LCD屏幕上显示64×64像素的测试图片
+    lv_obj_t *img = lv_img_create(lv_scr_act());
+    lv_img_set_src(img, &jiumi_img);
+    lv_obj_center(img);  // 将图片居中显示在屏幕上
+    
+    // Create a label below the image with screen info
     lv_obj_t *label = lv_label_create(lv_scr_act());
-    // 设置标签文本
-    lv_label_set_text(label, "Hello world!");
-    // 将标签居中对齐
-    lv_obj_align(label, LV_ALIGN_CENTER, 0, 0);
+    lv_label_set_text(label, "1.47\" LCD 172x320\nJiumi Test Image");
+    lv_obj_align(label, LV_ALIGN_BOTTOM_MID, 0, -10);
+    lv_obj_set_style_text_align(label, LV_TEXT_ALIGN_CENTER, 0);
+    
+    // Create a title label at the top
+    lv_obj_t *title = lv_label_create(lv_scr_act());
+    lv_label_set_text(title, "Choomi Pet Display");
+    lv_obj_align(title, LV_ALIGN_TOP_MID, 0, 10);
+    lv_obj_set_style_text_align(title, LV_TEXT_ALIGN_CENTER, 0);
+    
+    printf("Jiumi image loaded and displayed on LCD\n");
 
     // 主循环
     while (1) {
