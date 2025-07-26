@@ -1,0 +1,73 @@
+[1/5] C:\Windows\system32\cmd.exe /C "cd /D E:\workplace\Choomi\src\ChoomiPet\build\esp-idf\esptool_py && D:\Espressif\python_env\idf5.4_py3.12_env\Scripts\python.exe D:/Espressif/frameworks/esp-idf-v5.4.1/components/partition_table/check_sizes.py --offset 0x8000 partition --type app E:/workplace/Choomi/src/ChoomiPet/build/partition_table/partition-table.bin E:/workplace/Choomi/src/ChoomiPet/build/choomi_pet.bin"
+choomi_pet.bin binary size 0xc9ee0 bytes. Smallest app partition is 0x100000 bytes. 0x36120 bytes (21%) free.
+[2/5] Performing build step for 'bootloader'
+[1/1] C:\Windows\system32\cmd.exe /C "cd /D E:\workplace\Choomi\src\ChoomiPet\build\bootloader\esp-idf\esptool_py && D:\Espressif\python_env\idf5.4_py3.12_env\Scripts\python.exe D:/Espressif/frameworks/esp-idf-v5.4.1/components/partition_table/check_sizes.py --offset 0x8000 bootloader 0x0 E:/workplace/Choomi/src/ChoomiPet/build/bootloader/bootloader.bin"
+Bootloader binary size 0x59e0 bytes. 0x2620 bytes (30%) free.
+[3/5] No install step for 'bootloader'
+[4/5] Completed 'bootloader'
+[4/5] C:\Windows\system32\cmd.exe /C "cd /D D:\Espressif\frameworks\esp-idf-v5.4.1\components\esptool_py && D:\Espressif\tools\cmake\3.30.2\bin\cmake.exe -D IDF_PATH=D:/Espressif/frameworks/esp-idf-v5.4.1 -D SERIAL_TOOL=D:/Espressif/python_env/idf5.4_py3.12_env/Scripts/python.exe;;D:/Espressif/frameworks/esp-idf-v5.4.1/components/esptool_py/esptool/esptool.py;--chip;esp32c6 -D SERIAL_TOOL_ARGS=--before=default_reset;--after=hard_reset;write_flash;@flash_args -D WORKING_DIRECTORY=E:/workplace/Choomi/src/ChoomiPet/build -P D:/Espressif/frameworks/esp-idf-v5.4.1/components/esptool_py/run_serial_tool.cmake"
+esptool.py --chip esp32c6 -p COM4 -b 460800 --before=default_reset --after=hard_reset write_flash --flash_mode dio --flash_freq 80m --flash_size 4MB 0x0 bootloader/bootloader.bin 0x10000 choomi_pet.bin 0x8000 partition_table/partition-table.bin
+esptool.py v4.9.0
+Serial port COM4
+Connecting...
+Chip is ESP32-C6FH4 (QFN32) (revision v0.2)
+Features: WiFi 6, BT 5, IEEE802.15.4
+Crystal is 40MHz
+USB mode: USB-Serial/JTAG
+MAC: a0:85:e3:ff:fe:ae:ac:20
+BASE MAC: a0:85:e3:ae:ac:20
+MAC_EXT: ff:fe
+Uploading stub...
+Running stub...
+Stub running...
+Changing baud rate to 460800
+Changed.
+Configuring flash size...
+Flash will be erased from 0x00000000 to 0x00005fff...
+Flash will be erased from 0x00010000 to 0x000d9fff...
+Flash will be erased from 0x00008000 to 0x00008fff...
+SHA digest in image updated
+Compressed 23008 bytes to 14198...
+Writing at 0x00000000... (100 %)
+Wrote 23008 bytes (14198 compressed) at 0x00000000 in 0.2 seconds (effective 1069.0 kbit/s)...
+Hash of data verified.
+Compressed 827104 bytes to 480364...
+Writing at 0x00010000... (3 %)
+Writing at 0x0001bf52... (6 %)
+Writing at 0x00025035... (10 %)
+Writing at 0x0002e6e6... (13 %)
+Writing at 0x000353be... (16 %)
+Writing at 0x0003d0fa... (20 %)
+Writing at 0x00044cf7... (23 %)
+Writing at 0x0004b7ee... (26 %)
+Writing at 0x00051c77... (30 %)
+Writing at 0x00058488... (33 %)
+Writing at 0x0005ebfd... (36 %)
+Writing at 0x00064a16... (40 %)
+Writing at 0x0006aad2... (43 %)
+Writing at 0x00070c55... (46 %)
+Writing at 0x000772bc... (50 %)
+Writing at 0x0007cf85... (53 %)
+Writing at 0x00083004... (56 %)
+Writing at 0x000891a0... (60 %)
+Writing at 0x0008f691... (63 %)
+Writing at 0x000967b5... (66 %)
+Writing at 0x0009d5e4... (70 %)
+Writing at 0x000a451e... (73 %)
+Writing at 0x000aa701... (76 %)
+Writing at 0x000b09ea... (80 %)
+Writing at 0x000b6f27... (83 %)
+Writing at 0x000bce20... (86 %)
+Writing at 0x000c39ea... (90 %)
+Writing at 0x000ca74a... (93 %)
+Writing at 0x000d0053... (96 %)
+Writing at 0x000d6189... (100 %)
+Wrote 827104 bytes (480364 compressed) at 0x00010000 in 2.8 seconds (effective 2328.3 kbit/s)...
+Hash of data verified.
+Compressed 3072 bytes to 103...
+Writing at 0x00008000... (100 %)
+Wrote 3072 bytes (103 compressed) at 0x00008000 in 0.0 seconds (effective 1056.6 kbit/s)...
+Hash of data verified.
+
+Leaving...
+Hard resetting via RTS pin...
