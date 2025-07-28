@@ -1,0 +1,142 @@
+# Build directories
+build/
+
+# ESP-IDF specific
+sdkconfig.old
+sdkconfig.defaults.old
+
+# Compiled object files
+*.o
+*.obj
+*.a
+*.lib
+
+# Executable and binary files
+*.bin
+*.elf
+*.map
+*.exe
+
+# Build system files
+*.ninja
+.ninja_deps
+.ninja_log
+build.ninja
+*.timestamp
+.bin_timestamp
+
+# CMake generated files
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+compile_commands.json
+project_description.json
+project_elf_src_*.c
+
+# ESP-IDF component object files
+*.c.obj
+*.cpp.obj
+*.cc.obj
+*.cxx.obj
+
+# Bootloader files
+bootloader.bin
+bootloader.elf
+bootloader.map
+
+# Library files
+lib*.a
+
+# Description files
+*_desc.c.obj
+*_format.a
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+
+# Dependencies
+managed_components/
+dependencies.lock
+
+# Flash download tool
+flash_project_args
+flasher_args.json
+
+# Partition table
+partition_table/
+
+# Bootloader
+bootloader/
+
+# Application binary
+*.bin
+*.elf
+*.map
+
+# CMake
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+compile_commands.json
+
+# Ninja
+.ninja_deps
+.ninja_log
+build.ninja
+
+# Config
+config/
+kconfigs.in
+kconfigs_projbuild.in
+
+# Generated files
+project_description.json
+project_elf_src_*.c
+x509_crt_bundle.S
+
+# Flash arguments
+*flash_args*
+
+# GDB
+gdbinit/
+
+# Log files
+log/
+
+# Binary timestamp
+.bin_timestamp
+
+# Environment
+config.env
+
+# ESP-IDF components
+esp-idf/
+
+# Prefix
+*-prefix/
+
+# Complete flag
+*-complete
+
+# Libraries
+ldgen_libraries*
