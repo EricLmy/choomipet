@@ -11,8 +11,12 @@ extern "C" {
 // I2S音频引脚定义
 #define I2S_BCLK_PIN    4
 #define I2S_WS_PIN      5
-#define I2S_DIN_PIN     18
-#define I2S_DOUT_PIN    19
+#define I2S_DIN_PIN     9   // 麦克风数据输入 (INMP441 SD)
+#define I2S_DOUT_PIN    20  // 扬声器数据输出 (MAX98357A DIN)
+
+// MAX98357A扬声器专用引脚
+#define SPEAKER_BCLK_PIN    18  // MAX98357A BCLK
+#define SPEAKER_LRCLK_PIN   19  // MAX98357A LRCLK
 
 // SPI显示引脚定义
 #define SPI_CLK_PIN     7
@@ -31,7 +35,9 @@ extern "C" {
 #define RGB_LED_PIN     8
 
 // ADC引脚定义
-#define BAT_ADC_PIN     9
+// 注意：GPIO23在ESP32-C6上不支持ADC功能，暂时保留GPIO9的ADC配置
+// 实际硬件连接时需要使用分离的ADC引脚或外部ADC芯片
+#define BAT_ADC_PIN     12   // 电池电压检测 (与麦克风共用，需要时分复用)
 
 // GPIO配置状态枚举
 typedef enum {

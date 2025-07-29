@@ -8,18 +8,33 @@ static const char *TAG = "GPIO_CONFIG";
 esp_err_t gpio_config_all(void) {
     ESP_LOGI(TAG, "Starting GPIO configuration...");
     
-    // 配置I2S引脚
-    gpio_config_t i2s_config = {
-        .pin_bit_mask = (1ULL << I2S_BCLK_PIN) | (1ULL << I2S_WS_PIN) | 
+    // 配置I2S麦克风引脚（输出：BCLK, WS）
+    gpio_config_t i2s_mic_config = {
+        .pin_bit_mask = (1ULL << I2S_BCLK_PIN) | (1ULL << I2S_WS_PIN),
+        .mode = GPIO_MODE_OUTPUT,
+        .pull_up_en = GPIO_PULLUP_DISABLE,
+        .pull_down_en = GPIO_PULLDOWN_DISABLE,
+        .intr_type = GPIO_INTR_DISABLE
+    };
+    
+    // 配置扬声器专用引脚
+    gpio_config_t speaker_config = {
+        .pin_bit_mask = (1ULL << SPEAKER_BCLK_PIN) | (1ULL << SPEAKER_LRCLK_PIN) | 
                        (1ULL << I2S_DOUT_PIN),
         .mode = GPIO_MODE_OUTPUT,
         .pull_up_en = GPIO_PULLUP_DISABLE,
         .pull_down_en = GPIO_PULLDOWN_DISABLE,
         .intr_type = GPIO_INTR_DISABLE
     };
-    esp_err_t ret = gpio_config(&i2s_config);
+    esp_err_t ret = gpio_config(&i2s_mic_config);
     if (ret != ESP_OK) {
-        ESP_LOGE(TAG, "Failed to configure I2S output pins: %s", esp_err_to_name(ret));
+        ESP_LOGE(TAG, "Failed to configure I2S microphone pins: %s", esp_err_to_name(ret));
+        return ret;
+    }
+    
+    ret = gpio_config(&speaker_config);
+    if (ret != ESP_OK) {
+        ESP_LOGE(TAG, "Failed to configure speaker pins: %s", esp_err_to_name(ret));
         return ret;
     }
     
