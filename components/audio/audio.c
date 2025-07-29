@@ -35,7 +35,7 @@ esp_err_t audio_deinit(void) {
         ESP_LOGE(TAG, "Failed to uninstall microphone I2S driver: %s", esp_err_to_name(ret));
     }
     
-    ret = i2s_driver_uninstall(I2S_NUM_1);  // 扬声器
+    ret = i2s_driver_uninstall(I2S_NUM_0);  // 扬声器
     if (ret != ESP_OK) {
         ESP_LOGE(TAG, "Failed to uninstall speaker I2S driver: %s", esp_err_to_name(ret));
     }
@@ -92,7 +92,7 @@ esp_err_t audio_start_playback(void) {
     }
     
     // 启动扬声器I2S发送
-    esp_err_t ret = i2s_start(I2S_NUM_1);
+    esp_err_t ret = i2s_start(I2S_NUM_0);
     if (ret != ESP_OK) {
         ESP_LOGE(TAG, "Failed to start speaker I2S: %s", esp_err_to_name(ret));
         return ret;
@@ -111,7 +111,7 @@ esp_err_t audio_stop_playback(void) {
     }
     
     // 停止扬声器I2S发送
-    esp_err_t ret = i2s_stop(I2S_NUM_1);
+    esp_err_t ret = i2s_stop(I2S_NUM_0);
     if (ret != ESP_OK) {
         ESP_LOGE(TAG, "Failed to stop speaker I2S: %s", esp_err_to_name(ret));
         return ret;

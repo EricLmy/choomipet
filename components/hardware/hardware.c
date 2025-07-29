@@ -12,8 +12,7 @@ static const char *TAG = "HARDWARE";
 static ws2812b_config_t ws2812b_config = {
     .gpio_pin = RGB_LED_PIN,
     .led_count = 1,
-    .rmt_channel = NULL,
-    .rmt_encoder = NULL
+    .led_strip = NULL
 };
 
 esp_err_t hardware_init(void) {

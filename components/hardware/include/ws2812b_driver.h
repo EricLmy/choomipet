@@ -3,7 +3,7 @@
 
 #include "esp_err.h"
 #include "driver/gpio.h"
-#include "driver/rmt_tx.h"
+#include "led_strip.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -11,14 +11,7 @@ extern "C" {
 
 // WS2812B配置参数
 #define WS2812B_LED_COUNT       1       // LED数量
-#define WS2812B_RMT_RESOLUTION  10000000 // 10MHz resolution, 1 tick = 0.1us
-
-// WS2812B时序参数 (单位: 0.1us)
-#define WS2812B_T0H_TICKS       3       // 0码高电平时间: 0.3us
-#define WS2812B_T0L_TICKS       9       // 0码低电平时间: 0.9us
-#define WS2812B_T1H_TICKS       9       // 1码高电平时间: 0.9us
-#define WS2812B_T1L_TICKS       3       // 1码低电平时间: 0.3us
-#define WS2812B_RESET_TICKS     500     // 复位时间: 50us
+#define WS2812B_GPIO_PIN        8       // GPIO引脚
 
 // RGB颜色结构体
 typedef struct {
@@ -31,8 +24,7 @@ typedef struct {
 typedef struct {
     gpio_num_t gpio_pin;
     uint16_t led_count;
-    rmt_channel_handle_t rmt_channel;
-    rmt_encoder_handle_t rmt_encoder;
+    led_strip_handle_t led_strip;
 } ws2812b_config_t;
 
 /**

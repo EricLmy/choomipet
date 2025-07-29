@@ -98,7 +98,7 @@ esp_err_t hardware_init_start(void) {
     g_hw_status.current_stage = HW_INIT_STAGE_I2S;
     ESP_LOGI(TAG, "Stage: %s", hardware_get_stage_name(g_hw_status.current_stage));
     
-    // I2S基础配置
+    // I2S配置 - 支持同时收发（麦克风和扬声器共享）
     i2s_config_t i2s_config = {
         .mode = I2S_MODE_MASTER | I2S_MODE_TX | I2S_MODE_RX,
         .sample_rate = 16000,
@@ -112,76 +112,34 @@ esp_err_t hardware_init_start(void) {
         .tx_desc_auto_clear = true,
         .fixed_mclk = 0
     };
-    
-    // 注意：根据新的硬件连接，麦克风和扬声器使用不同的引脚
+
+    // 注意：ESP32-C6只有一个I2S端口，配置为同时支持麦克风和扬声器
     // 麦克风使用 GPIO4(BCLK), GPIO5(WS), GPIO9(DIN)
-    // 扬声器使用 GPIO18(BCLK), GPIO19(LRCLK), GPIO20(DIN)
-    // 当前配置为麦克风专用I2S端口
+    // 扬声器使用相同的时钟信号，数据输出到 GPIO20
     i2s_pin_config_t pin_config = {
-        .bck_io_num = I2S_BCLK_PIN,        // GPIO4 - 麦克风BCLK
-        .ws_io_num = I2S_WS_PIN,           // GPIO5 - 麦克风WS
-        .data_out_num = I2S_PIN_NO_CHANGE, // 麦克风不需要输出
+        .bck_io_num = I2S_BCLK_PIN,        // GPIO4 - 共享BCLK
+        .ws_io_num = I2S_WS_PIN,           // GPIO5 - 共享WS
+        .data_out_num = I2S_DOUT_PIN,      // GPIO20 - 扬声器数据输出
         .data_in_num = I2S_DIN_PIN         // GPIO9 - 麦克风数据输入
     };
-    
-    // 安装麦克风I2S驱动 (I2S_NUM_0)
+
+    // 安装I2S驱动 (I2S_NUM_0) - 支持同时收发
     ret = i2s_driver_install(I2S_NUM_0, &i2s_config, 0, NULL);
     if (ret != ESP_OK) {
-        ESP_LOGE(TAG, "I2S microphone driver installation failed: %s", esp_err_to_name(ret));
+        ESP_LOGE(TAG, "I2S driver installation failed: %s", esp_err_to_name(ret));
         g_hw_status.last_error = HW_INIT_ERR_I2S;
         g_hw_status.current_stage = HW_INIT_STAGE_ERROR;
         return ret;
     }
-    
+
     ret = i2s_set_pin(I2S_NUM_0, &pin_config);
     if (ret != ESP_OK) {
-        ESP_LOGE(TAG, "I2S microphone pin configuration failed: %s", esp_err_to_name(ret));
+        ESP_LOGE(TAG, "I2S pin configuration failed: %s", esp_err_to_name(ret));
         g_hw_status.last_error = HW_INIT_ERR_I2S;
         g_hw_status.current_stage = HW_INIT_STAGE_ERROR;
         return ret;
     }
-    ESP_LOGI(TAG, "I2S microphone driver initialized successfully");
-    
-    // 配置扬声器I2S (I2S_NUM_1)
-    i2s_config_t i2s_config_speaker = {
-        .mode = I2S_MODE_MASTER | I2S_MODE_TX,  // 仅发送模式
-        .sample_rate = 16000,
-        .bits_per_sample = I2S_BITS_PER_SAMPLE_16BIT,
-        .channel_format = I2S_CHANNEL_FMT_ONLY_LEFT,
-        .communication_format = I2S_COMM_FORMAT_STAND_I2S,
-        .intr_alloc_flags = ESP_INTR_FLAG_LEVEL2,
-        .dma_buf_count = 4,
-        .dma_buf_len = 1024,
-        .use_apll = false,
-        .tx_desc_auto_clear = true,
-        .fixed_mclk = 0
-    };
-    
-    i2s_pin_config_t pin_config_speaker = {
-        .bck_io_num = SPEAKER_BCLK_PIN,    // GPIO18 - 扬声器BCLK
-        .ws_io_num = SPEAKER_LRCLK_PIN,    // GPIO19 - 扬声器LRCLK
-        .data_out_num = I2S_DOUT_PIN,      // GPIO20 - 扬声器数据输出
-        .data_in_num = I2S_PIN_NO_CHANGE   // 扬声器不需要输入
-    };
-    
-    // 安装扬声器I2S驱动 (I2S_NUM_1)
-    ret = i2s_driver_install(I2S_NUM_1, &i2s_config_speaker, 0, NULL);
-    if (ret != ESP_OK) {
-        ESP_LOGE(TAG, "I2S speaker driver installation failed: %s", esp_err_to_name(ret));
-        g_hw_status.last_error = HW_INIT_ERR_I2S;
-        g_hw_status.current_stage = HW_INIT_STAGE_ERROR;
-        return ret;
-    }
-    
-    ret = i2s_set_pin(I2S_NUM_1, &pin_config_speaker);
-    if (ret != ESP_OK) {
-        ESP_LOGE(TAG, "I2S speaker pin configuration failed: %s", esp_err_to_name(ret));
-        g_hw_status.last_error = HW_INIT_ERR_I2S;
-        g_hw_status.current_stage = HW_INIT_STAGE_ERROR;
-        return ret;
-    }
-    ESP_LOGI(TAG, "I2S speaker driver initialized successfully");
-    ESP_LOGI(TAG, "I2S audio system initialized successfully");
+    ESP_LOGI(TAG, "I2S audio system initialized successfully (microphone + speaker)");
     
     // 2.7 ADC初始化阶段
     g_hw_status.current_stage = HW_INIT_STAGE_ADC;

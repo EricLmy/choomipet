@@ -86,11 +86,11 @@ esp_err_t gpio_config_all(void) {
     }
     ESP_LOGI(TAG, "Button pins configured successfully");
     
-    // 配置RGB LED引脚
+    // 配置RGB LED引脚（GPIO 8是strapping pin，硬件上已有上拉电阻）
     gpio_config_t rgb_config = {
         .pin_bit_mask = (1ULL << RGB_LED_PIN),
         .mode = GPIO_MODE_OUTPUT,
-        .pull_up_en = GPIO_PULLUP_DISABLE,
+        .pull_up_en = GPIO_PULLUP_DISABLE,   // 硬件上已有上拉电阻，禁用内部上拉
         .pull_down_en = GPIO_PULLDOWN_DISABLE,
         .intr_type = GPIO_INTR_DISABLE
     };
