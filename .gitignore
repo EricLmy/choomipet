@@ -1,145 +1,73 @@
-# Build directories
-build/
-
-# Demo directory
-demo/
-
-# ESP-IDF specific
-sdkconfig.old
-sdkconfig.defaults.old
-
-# Compiled object files
-*.o
-*.obj
-*.a
-*.lib
-
-# Executable and binary files
-*.bin
-*.elf
-*.map
-*.exe
-
-# Build system files
-*.ninja
-.ninja_deps
-.ninja_log
-build.ninja
-*.timestamp
-.bin_timestamp
-
-# CMake generated files
-CMakeCache.txt
-CMakeFiles/
-cmake_install.cmake
-compile_commands.json
-project_description.json
-project_elf_src_*.c
-
-# ESP-IDF component object files
-*.c.obj
-*.cpp.obj
-*.cc.obj
-*.cxx.obj
-
-# Bootloader files
-bootloader.bin
-bootloader.elf
-bootloader.map
-
-# Library files
-lib*.a
-
-# Description files
-*_desc.c.obj
-*_format.a
-
-# IDE files
+### 开发环境 ###
+# IDE
 .vscode/
 .idea/
 *.swp
 *.swo
 *~
 
-# OS generated files
+# 操作系统生成文件
 .DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
 Thumbs.db
 
-# Logs
-*.log
-
-# Temporary files
-*.tmp
-*.temp
-
-# Dependencies
-managed_components/
-dependencies.lock
-
-# Flash download tool
-flash_project_args
-flasher_args.json
-
-# Partition table
-partition_table/
-
-# Bootloader
-bootloader/
-
-# Application binary
+### 构建产物 ###
+# 编译输出
+build/
+*.o
+*.obj
+*.a
+*.lib
 *.bin
 *.elf
 *.map
+*.exe
 
-# CMake
+*.md
+# 构建系统
+.ninja_deps
+.ninja_log
+build.ninja
+*.ninja
+*.timestamp
+.bin_timestamp
+
+# CMake生成
 CMakeCache.txt
 CMakeFiles/
 cmake_install.cmake
 compile_commands.json
 
-# Ninja
-.ninja_deps
-.ninja_log
-build.ninja
+### ESP-IDF 特殊文件 ###
+sdkconfig.old
+sdkconfig.defaults.old
+managed_components/
+dependencies.lock
+partition_table/
+bootloader/
 
-# Config
-config/
-kconfigs.in
-kconfigs_projbuild.in
+### 调试相关 ###
+# GDB配置
+gdbinit/
 
-# Generated files
+# 日志文件
+*.log
+log/
+
+### 临时文件 ###
+*.tmp
+*.temp
+config.env
+
+### 测试相关 ###
+# 闪存参数
+*flash_args*
+flasher_args.json
+
+### 自动生成文件 ###
 project_description.json
 project_elf_src_*.c
 x509_crt_bundle.S
 
-# Flash arguments
-*flash_args*
-
-# GDB
-gdbinit/
-
-# Log files
-log/
-
-# Binary timestamp
-.bin_timestamp
-
-# Environment
-config.env
-
-# ESP-IDF components
+### 第三方依赖 ###
 esp-idf/
-
-# Prefix
 *-prefix/
-
-# Complete flag
-*-complete
-
-# Libraries
-ldgen_libraries*
